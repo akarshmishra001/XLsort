@@ -81,7 +81,7 @@ def sort():
 
         displaymsg = []
         for i in range (len(simple_list)):
-            displaymsg.append([str(i) , simple_list[i]])
+            displaymsg.append([str(i) , simple_list[i], ''])
 
         comments_show = Toplevel()
         comments_show.geometry('400x800')
@@ -96,14 +96,25 @@ def sort():
         sheet_show.change_theme(theme = "dark blue")
         displaymsg.pop(0)
         sheet_show.enable_bindings('all')
+        for num in range(len(displaymsg)):
+            sheet_show.create_checkbox(r=num,
+                            c=2,
+                            checked = False,
+                            state = "normal",
+                            redraw = True,
+                            check_function = lambda x=None: p 
+                            )
         sheet_show.set_sheet_data(displaymsg)
 
         def get_comment_value():
             selected_comments = []
-            list_of_row_no = sheet_show.get_selected_rows()
-            for i in list_of_row_no:
-                row_data = sheet_show.get_row_data(r=i, return_copy = True)
-                selected_comments.append(row_data[1])
+            #list_of_row_no = sheet_show.get_selected_rows()
+            #for i in list_of_row_no:
+            #    row_data = sheet_show.get_row_data(r=i, return_copy = True)
+            #    selected_comments.append(row_data[1])
+            for data in displaymsg:
+                if data[2] == True:
+                    selected_comments.append(data[1])
             print(selected_comments)
             if len(selected_comments) > 0:
                 for row in worksheet.iter_rows():
@@ -169,6 +180,9 @@ def change_sheet_tab():
     filename = filenamesht.split('/')[-1].split('.')[-2] + ' : ' + data.sheetnames[sheetno]
     uno_text.configure(text = (str(filename)))
 
+
+def p ():
+    pass
 
 root = tk.Tk()
 root.geometry('800x800')
